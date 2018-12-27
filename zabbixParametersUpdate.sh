@@ -2,7 +2,7 @@
 # -------------------------------------------------------------------------
 # @Programa 
 # 	@name: zabbixParametersUpdate.sh
-#	@versao: 1.0.1
+#	@versao: 1.0.2
 #	@Data 27 de Dezembro de 2018
 #	@Copyright: Verdanatech Soluções em TI, 2018, https://www.verdanatech.
 # --------------------------------------------------------------------------
@@ -30,6 +30,8 @@ git clone https://github.com/verdanatech/userParameters.git
 chmod +x userParameters/*
 
 mv userParameters/*.sh /bin/
+
+mv userParameters/*.conf /etc/zabbix/
 
 grep Include=/etc/zabbix/verdanatech.conf /etc/zabbix/zabbix_agentd.conf
 
