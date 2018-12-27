@@ -2,7 +2,7 @@
 # -------------------------------------------------------------------------
 # @Programa 
 # 	@name: zabbixParametersUpdate.sh
-#	@versao: 1.0.3
+#	@versao: 1.0.4
 #	@Data 27 de Dezembro de 2018
 #	@Copyright: Verdanatech Soluções em TI, 2018, https://www.verdanatech.
 # --------------------------------------------------------------------------
@@ -40,5 +40,8 @@ then
   echo "Include=/etc/zabbix/verdanatech.conf" >> /etc/zabbix/zabbix_agentd.conf
 fi
 
-systemctl restart zabbix-agent
+zAgentPID=$(pgrep zabbix_agentd | head -1)
+kill $zAgentPID
+
+systemctl start zabbix-agent
 
