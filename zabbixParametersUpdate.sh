@@ -2,8 +2,8 @@
 # -------------------------------------------------------------------------
 # @Programa 
 # 	@name: zabbixParametersUpdate.sh
-#	@versao: 1.0.0
-#	@Data 14 de Dezembro de 2018
+#	@versao: 1.0.1
+#	@Data 27 de Dezembro de 2018
 #	@Copyright: Verdanatech Soluções em TI, 2018, https://www.verdanatech.
 # --------------------------------------------------------------------------
 # LICENSE
@@ -31,4 +31,12 @@ chmod +x userParameters/*
 
 mv userParameters/*.sh /bin/
 
+grep Include=/etc/zabbix/verdanatech.conf /etc/zabbix/zabbix_agentd.conf
+
+if [ $? -ne 0 ]
+then
+  echo "grep Include=/etc/zabbix/verdanatech.conf" >> /etc/zabbix/zabbix_agentd.conf
+fi
+
+systemctl restart zabbix-agent
 
