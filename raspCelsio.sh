@@ -2,7 +2,7 @@
 # -------------------------------------------------------------------------
 # @Programa 
 # 	@name: raspCelsio.sh
-#	@versao: 0.0.1
+#	@versao: 0.0.2
 #	@Data 27 de Dezembro de 2018
 #	@Copyright: Verdanatech Soluções em TI, 2018, https://www.verdanatech.
 # --------------------------------------------------------------------------
@@ -30,7 +30,7 @@
 # Caso o valor retornado seja < 1, entao indicara erro de leitura.
 #
 
-result=$(/opt/vc/bin/vcgencmd measure_temp | cut -c 6-9)
+result=$(cat /sys/class/thermal/thermal_zone0/temp | cut -b 1-2)
 
 if [ -z $result ]
 then
