@@ -43,5 +43,5 @@ fi
 zAgentPID=$(pgrep zabbix_agentd | head -1)
 kill $zAgentPID
 
-systemctl start zabbix-agent
+zabbix_agentd
 
