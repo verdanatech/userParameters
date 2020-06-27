@@ -56,11 +56,27 @@ SHAREDDIR=$(cat $SMBCONFFILE | grep /dados/ | grep -Ev "recycle|sysvol|netlogon"
 
 case $1 in
 
+
+        #
+        # Item Name: sambaVersion
+        # Return SAMBA Version Running on System
+        # Data Type: String
+        # Return Exemple: 4.4.5 
+        #
+        
         sambaVersion)
         
-                echo $($SMBSTATUS -V | awk '{print $2}'
+                echo $($SMBSTATUS -V) | awk '{print $2}'
                 
         ;;
+
+
+        #
+        # Item Name: sharedDir
+        # Return SAMBA Shared dir present on smb.conf file
+        # Data Type: String
+        # Return Exemple: /dados/verdanatech 
+        #
         
         sharedDir)
           
@@ -68,30 +84,49 @@ case $1 in
                 
         ;;
 
-        listOpenFiles)
+
+        #
+        # Item Name: openFiles
+        # Return the quantity files is Open from Clients
+        # Data Type: Integer
+        # Return Exemple: 254
+        #
+        
+        openFiles)
 
                 echo $($SMBSTATUS -L | wc -l) -4  | bc 
 
         ;;
-
-        listFiles90d)
-
-                $FIND $SHAREDDIR -mtime +90 | wc -l
-
-        ;;
-
-        listFiles180d)
         
-                $FIND $SHAREDDIR -mtime +180 | wc -l
+        
+        #
+        # Item Name: filesChangedAgo
+        # Returns the number of files unchanged for a certain number of days. Passing a number of days as a second parameter is mandatory.
+        # Data Type: Integer
+        # Return Exemple: 1546
+        #
+        
+        filesChangedAgo)
+        
+                erroDescription="It needs a second parameter and it has not been passed."
+                [ -z $2 ]; && echo "erroDetect"
+                
+                erroDescription="An integer and positive number is expected as a second parameter but, was not found"
+                INTEIRO='^[0-9]+$'
+                ! [[ "$2" =~ $INTEIRO ]] && echo "erroDetect"
+
+                $FIND $SHAREDDIR -mtime +$2 | wc -l
 
         ;;
 
-        listFiles1d)
-
-                $FIND $SHAREDDIR -mtime -1 | wc -l
-        ;;
-
-        listUsersConnected)
+        #
+        # Item Name: usersConnected
+        # Return the number of users with active and open connections on the SMB share
+        # Data Type: Integer
+        # Return Exemple: 149
+        #
+        
+        usersConnected)
 
                 $SMBSTATUS -u | grep users | wc -l
 
