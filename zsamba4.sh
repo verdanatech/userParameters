@@ -46,6 +46,9 @@ erroDescription="SMB Config file not found"
 erroDescription="Not found smbstatus bin"
 SMBSTATUS=$(which smbstatus); [ $? -ne 0 ] && echo "erroDetect"
 
+erroDescription="Not found samba-tool bin"
+SAMBATOOL=$(which samba-tool); [ $? -ne 0 ] && echo "erroDetect"
+
 erroDescription="Not found discovery Share"
 SHAREDDIR=$(cat $SMBCONFFILE | grep /dados/ | grep -Ev "recycle|sysvol|netlogon" | awk '{print $3}'); [ $? -ne 0 ] && echo "erroDetect"
 
@@ -131,5 +134,19 @@ case $1 in
                 $SMBSTATUS -u | grep users | wc -l
 
         ;;
+        
+        #
+        # Item Name: activeUsers
+        # Return the number of users with active on LDAP Data Base
+        # Data Type: Integer
+        # Return Exemple: 149
+        #
+        
+        activeUsers)
+              $SAMBATOOL user list | wc -l
+         ;;
+
+
+
 
 esac
