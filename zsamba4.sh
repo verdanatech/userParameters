@@ -112,7 +112,7 @@ case $1 in
         filesChangedAgo)
         
                 erroDescription="It needs a second parameter and it has not been passed."
-                [ -z $2 ]; && echo "erroDetect"
+                [ -z $2 ] && echo "erroDetect"
                 
                 erroDescription="An integer and positive number is expected as a second parameter but, was not found"
                 INTEIRO='^[0-9]+$'
